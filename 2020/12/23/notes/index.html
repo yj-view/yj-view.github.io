@@ -76,8 +76,8 @@
 <script src="index_files/header-attrs/header-attrs.js"></script>
 
 
-<pre class="r"><code>##多边形涂色
-y &lt;- read.csv(&quot;E:\\training\\zs1.csv&quot;)
+<p>#1.多边形涂色</p>
+<pre class="r"><code>y &lt;- read.csv(&quot;E:\\training\\zs1.csv&quot;)
 
 y_green &lt;- c(0, apply(y[, 2:3], 1, max), 0)
 y_pink &lt;- c(0, y$y2, 0)
@@ -92,6 +92,34 @@ lines(y$x, y$y2)
 lines(y$x, y$y1, lty = 2, col=&quot;blue1&quot;)
 box()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>#2.空缺数据填充</p>
+<pre class="r"><code>library(readr)
+library(readxl)
+cz &lt;- read_excel(&quot;E:\\training\\cz.xlsx&quot;)
+cz$ym &lt;- paste(cz$year, cz$month, sep = &quot;_&quot;)
+
+cz2 &lt;- data.frame(year = rep(2006:2019, each = 12),
+                  month = rep(1:12, 14))
+cz2$ym &lt;- paste(cz2$year, cz2$month, sep = &quot;_&quot;)
+cz3 &lt;- merge(cz, cz2, by = &quot;ym&quot;, all = TRUE)
+cz3 &lt;- cz3[, !(colnames(cz3) %in% c(&quot;ym&quot;, &quot;year.y&quot;, &quot;month.y&quot;))]
+cz4 &lt;- cz3[order(cz3$year.x, cz3$month.x), ]##按行排序,感叹号表示否</code></pre>
+<p>#3.创建网页</p>
+<pre class="r"><code>#创建网页
+#新建blogdown文件
+#content-about.md,修改个人简介
+#Addins-选择newpost-选择Rmarkdown
+#添加标题和作者
+#Github网页创建new Repositories
+#输入Repository name
+#点击creat repository（注意命名前后一致.github.io）
+#打开创建blog文件中的&quot;.Rproj&quot;文件
+#添加Git,输入Github中新增的Repository的网址，创建一个新的文件
+#将创建blog文件中&quot;public&quot;全选复制到上一步新建的文件中
+#打开复制后文件下的.github.io.Rproj文件
+#在RStudio中点击右上角“Git”、“Commit”
+#在新增页面的右边随便输入英文，左侧文件全部选中，点击&quot;create&quot;
+#在Github网页中查看相应网址</code></pre>
 
     </div>
   </article>
